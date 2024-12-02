@@ -40,3 +40,5 @@ Thumbs.db
 
 # Redis dump file (if applicable)
 dump.rdb
+
+players-ladder.json
