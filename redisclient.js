@@ -1,15 +1,14 @@
 const { createClient } = require("redis");
 
-const client = createClient({
-  url: "redis://localhost:6379", // Use your Redis URL
+const client = redis.createClient({
+  url: process.env.REDIS_URL, // This variable is automatically injected by Railway
+  socket: {
+    tls: true, // Enable TLS (required for most Railway Redis setups)
+    rejectUnauthorized: false,
+  },
 });
 
-client.on("error", (err) => console.error("Redis Client Error:", err));
-client.on("connect", () => console.log("Connected to Redis!"));
+client.on('connect', () => console.log('Connected to Redis'));
+client.on('error', (err) => console.error('Redis Client Error', err));
 
-// Ensure the client connects on initialization
-(async () => {
-  await client.connect();
-})();
-
-module.exports = client;
+client.connect();
