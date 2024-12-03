@@ -8,6 +8,7 @@ const rankedData = require("./routes/rankeddata.js");
 const rankpercentile = require("./routes/rankpercentile.js");
 const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
+const buildladder = require("./buildladder.js");
 
 const app = express();
 
@@ -32,3 +33,5 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+buildladder.js();
