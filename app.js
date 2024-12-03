@@ -8,11 +8,16 @@ const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
 
 const cors = require('cors');
+
 app.use(cors({
-  origin: ['https://lolfolio-production.up.railway.app'], // Replace with your frontend domain
+  origin: 'https://lolfolio-production.up.railway.app', // Replace with your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the HTTP methods your API supports
-  allowedHeaders: ['Content-Type', 'Authorization'], // Include any custom headers you use
+  allowedHeaders: ['Content-Type', 'Authorization'], // Include any custom headers your app uses
 }));
+
+// Handle preflight requests (optional, but recommended for complex requests)
+app.options('*', cors());
+
 
 
 const app = express();
