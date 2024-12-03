@@ -7,6 +7,14 @@ const rankpercentile = require("./routes/rankpercentile.js");
 const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
 
+const cors = require('cors');
+app.use(cors({
+  origin: ['https://lolfolio-production.up.railway.app'], // Replace with your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the HTTP methods your API supports
+  allowedHeaders: ['Content-Type', 'Authorization'], // Include any custom headers you use
+}));
+
+
 const app = express();
 
 app.use(express.json()); // Parse JSON requests
