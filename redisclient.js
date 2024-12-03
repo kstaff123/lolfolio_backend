@@ -1,17 +1,11 @@
 const redis = require('redis');
 
 const client = redis.createClient({
-    url: process.env.REDIS_URL, // Use the Redis URL from your environment variables
-    socket: {
-        tls: true, // Enable TLS if required by your Redis setup
-        rejectUnauthorized: false,
-    },
+    url: process.env.REDIS_URL || `redis://${process.env.REDISHOST}:${process.env.REDISPORT}`,
+    password: process.env.REDISPASSWORD, // Include password if required
 });
 
-client.on('error', (err) => {
-    console.error('Redis Client Error:', err);
-});
-
+client.on('error', (err) => console.error('Redis Client Error:', err));
 client.connect();
 
 module.exports = client;
