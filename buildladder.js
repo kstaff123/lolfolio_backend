@@ -3,6 +3,9 @@ const axios = require("axios");
 const fs = require("fs");
 const redis = require("redis");
 
+module.exports = function buildladder(){
+
+
 // Constants for sorting
 const rankOrder = {
   CHALLENGER: 1,
@@ -107,4 +110,4 @@ const start = async () => {
   }
 };
 
-start(); // Start the process
+};

@@ -1,5 +1,6 @@
 require("dotenv").config(); // Load environment variables
 const express = require("express");
+const buildladder = require("./buildladder.js");
 const cors = require("cors"); // Ensure CORS is imported early
 
 const accountRoutes = require("./routes/accountroutes.js");
@@ -8,7 +9,6 @@ const rankedData = require("./routes/rankeddata.js");
 const rankpercentile = require("./routes/rankpercentile.js");
 const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
-const buildladder = require("./buildladder.js");
 
 const app = express();
 
@@ -32,6 +32,7 @@ app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, ma
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  buildladder();
 });
 
-buildladder.js();
+
