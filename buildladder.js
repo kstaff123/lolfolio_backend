@@ -109,5 +109,5 @@ const start = async () => {
     console.log("Redis connection closed.");
   }
 };
-
+  start();
 };
