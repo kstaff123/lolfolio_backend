@@ -1,6 +1,5 @@
 require("dotenv").config(); // Load environment variables
 const express = require("express");
-const {cacheData, cachePlayersInRedis} = require("./buildladder.js");
 const cors = require("cors"); // Ensure CORS is imported early
 
 const accountRoutes = require("./routes/accountroutes.js");
