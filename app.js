@@ -32,7 +32,12 @@ app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, ma
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  buildladder();
+  try {
+    buildladder();
+  }
+  catch (error) {
+    console.log(error);
+  }
 });
 
 
