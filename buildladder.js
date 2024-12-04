@@ -2,6 +2,7 @@ require("dotenv").config();
 const axios = require("axios");
 const fs = require("fs");
 const redis = require("redis");
+const client = require("../redisclient");
 
 module.exports = function buildladder(){
 
@@ -79,11 +80,7 @@ const saveToJSON = (filename, data) => {
 };
 
 const start = async () => {
-  const client = redis.createClient();
-
-  client.on("error", (err) => console.error("Redis client error:", err));
-  client.on("connect", () => console.log("Connected to Redis"));
-
+  
   await client.connect(); // Connect to Redis
 
   try {
