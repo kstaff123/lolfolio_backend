@@ -4,7 +4,7 @@ const fs = require("fs");
 const redis = require("redis");
 const client = require("./redisclient");
 
-module.exports = {cacheData, cachePlayersInRedis};
+
 
 
 // Constants for sorting
@@ -110,3 +110,5 @@ const cacheData = async () => {
   }
 
 }
+
+module.exports = {cacheData, cachePlayersInRedis};
