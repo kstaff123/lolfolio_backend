@@ -4,7 +4,7 @@ const fs = require("fs");
 const redis = require("redis");
 const client = require("./redisclient");
 
-module.exports = function buildladder(){
+module.exports = {cacheData, cachePlayersInRedis};
 
 
 // Constants for sorting
@@ -101,4 +101,12 @@ const start = async () => {
     console.error("An error occurred:", error.message);
   }
 };
-};
+const cacheData = async () => {
+  try {
+    const players = JSON.parse(fs.readFileSync("players-ladder.json"));
+    await cachePlayersInRedis(client, players);
+  } catch (error) {
+    console.error("Error caching players:", error.message);
+  }
+
+}

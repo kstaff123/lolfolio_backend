@@ -1,6 +1,6 @@
 require("dotenv").config(); // Load environment variables
 const express = require("express");
-const buildladder = require("./buildladder.js");
+const {cacheData, cachePlayersInRedis} = require("./buildladder.js");
 const cors = require("cors"); // Ensure CORS is imported early
 
 const accountRoutes = require("./routes/accountroutes.js");
@@ -34,7 +34,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   try {
     console.log("Building ladder...");
-    buildladder().cacheData();
+    cacheData();
   }
   catch (error) {
     console.log(error);
