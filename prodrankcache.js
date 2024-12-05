@@ -7,7 +7,7 @@ const client = require("./redisclient");
 const streamPipeline = promisify(pipeline);
 
 const fetchAndCacheData = async () => {
-  const fileUrl = 'https://your-cloud-storage.com/players-ladder.json';
+  const fileUrl = 'https://storage.googleapis.com/playerladder/players-ladder.json';
 
   try {
     console.log('Downloading and processing JSON file...');
