@@ -1,12 +1,11 @@
 const express = require("express");
 const axios = require("axios");
-const checkCache = require("../middleware/cacheMiddleware");
 
 const router = express.Router();
 
 const client = require("../redisclient");
 
-router.get("/summoner/:PUUID", checkCache, async (req, res) => {
+router.get("/summoner/:PUUID", async (req, res) => {
   const { PUUID } = req.params;
   const cacheKey = `${PUUID}`;
 

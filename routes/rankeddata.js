@@ -1,12 +1,11 @@
 const express = require("express");
 const axios = require("axios");
-const checkCache = require("../middleware/cacheMiddleware");
 
 const router = express.Router();
 
 const client = require("../redisclient");
 
-router.get("/league/:encryptedSummonerId", checkCache, async (req, res) => {
+router.get("/league/:encryptedSummonerId",  async (req, res) => {
   const { encryptedSummonerId } = req.params;
   const cacheKey = `${encryptedSummonerId}`;
 
