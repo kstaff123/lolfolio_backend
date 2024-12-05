@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
-  },
+  "start": "git lfs pull && node app.js"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
