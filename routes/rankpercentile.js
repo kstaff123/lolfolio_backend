@@ -6,11 +6,12 @@ const client = require("../redisclient");
 router.get("/player/:summonerId", async (req, res) => {
     const { summonerId } = req.params;
     const cacheKey = `player:${summonerId}`;
+    
   
     try {
       // Check Redis cache first
       const cachedData = await client.get(cacheKey);
-      if (cachedData) {
+      if (cachedData && cachedData !== "nil" || cachedData !== null || cachedData !== undefined) {
         console.log("Returning cached data for:", summonerId);
         return res.status(200).json(JSON.parse(cachedData));
       }
