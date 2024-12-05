@@ -45,20 +45,20 @@ const fetchAndCacheData = async () => {
 };
 
 const cachePlayersInRedis = async (client, players) => {
-  try {
-    const redisPipeline = client.pipeline();
-    players.forEach((player) => {
-      const key = `rank:${player.ladderRank}:${player.summonerId}`;
-      redisPipeline.set(key, JSON.stringify(player), 'EX', 86400);
-    });
-    await redisPipeline.exec();
-    console.log('Cached players in Redis.');
-  } catch (error) {
-    console.error('Error caching players:', error.message);
-  }
-
-  console.log('Download, processing, and caching completed successfully.');
-
-};
+    try {
+      const redisMulti = client.multi(); // Use multi() for batch operations
+      players.forEach((player) => {
+        const key = `rank:${player.ladderRank}:${player.summonerId}`;
+        redisMulti.set(key, JSON.stringify(player), 'EX', 86400); // Set the key with expiration
+      });
+      await redisMulti.exec(); // Execute all commands in the batch
+      console.log('Cached players in Redis.');
+    } catch (error) {
+      console.error('Error caching players:', error.message);
+    }
+  
+    console.log('Download, processing, and caching completed successfully.');
+  };
+  
 
 module.exports = { fetchAndCacheData};
