@@ -64,12 +64,30 @@ router.get("/player/:summonerId", async (req, res) => {
 const scanKeys = async (pattern) => {
   let cursor = '0';
   const keys = [];
+
   do {
-    const [nextCursor, scanResults] = await client.scan(cursor, 'MATCH', pattern, 'COUNT', 1000);
-    cursor = nextCursor;
-    keys.push(...scanResults);
+    try {
+      // Perform Redis SCAN
+      const result = await client.scan(cursor, 'MATCH', pattern, 'COUNT', 1000);
+
+      // Validate the result
+      if (!Array.isArray(result) || result.length !== 2) {
+        throw new Error('Unexpected SCAN response format');
+      }
+
+      const [nextCursor, scanResults] = result;
+
+      // Update cursor and accumulate keys
+      cursor = nextCursor;
+      keys.push(...scanResults);
+    } catch (error) {
+      console.error('Error during SCAN operation:', error.message);
+      throw error;
+    }
   } while (cursor !== '0');
+
   return keys;
 };
+
 
 module.exports = router;
