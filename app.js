@@ -14,7 +14,7 @@ const app = express();
 
 // Register CORS middleware
 app.use(cors({
-  origin: 'https://lolfolio-production.up.railway.app', // Replace with your frontend domain
+  origin: /*'https://lolfolio-production.up.railway'*/ 'http://localhost:5173', // Replace with your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the HTTP methods your API supports
   allowedHeaders: ['Content-Type', 'Authorization'], // Include any custom headers your app uses
 }));
@@ -34,7 +34,7 @@ app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   try {
     console.log("Building ladder...");
-    await fetchAndCacheData(); // Call the function with `await`
+    /*await fetchAndCacheData(); */// Call the function with `await`
     console.log("Ladder built successfully");
 } catch (error) {
     console.error("Error building ladder:", error);
