@@ -3,6 +3,7 @@ const { pipeline } = require('stream');
 const { promisify } = require('util');
 const fs = require('fs');
 const client = require("./redisclient");
+const { pipeline } = require('stream');
 
 const streamPipeline = promisify(pipeline);
 
