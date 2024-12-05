@@ -35,6 +35,8 @@ router.get("/player/:summonerId", async (req, res) => {
       const rankKey = rankKeys.find((key) => key.endsWith(summonerId));
       console.log("Summoner ID:", summonerId);
       console.log("Rank Keys:", rankKeys);
+      console.log("Number of rank keys:", rankKeys.length);
+
 
       console.log("Rank key:", rankKey);
       console.log("Rank Percentile playerData", playerData);
