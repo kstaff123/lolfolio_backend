@@ -8,7 +8,7 @@ const rankedData = require("./routes/rankeddata.js");
 const rankpercentile = require("./routes/rankpercentile.js");
 const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
-const {cacheData}= require("./buildladder.js");
+const {fetchAndCacheData} = require("./prodrankcache.js");
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   try {
     console.log("Building ladder...");
-    cacheData();
+    fetchAndCacheData();
   }
   catch (error) {
     console.log(error);
