@@ -35,6 +35,7 @@ app.listen(PORT, () => {
   try {
     console.log("Building ladder...");
     fetchAndCacheData;
+    console.log("Ladder built successfully");
   }
   catch (error) {
     console.log(error);
