@@ -11,7 +11,7 @@ router.get("/player/:summonerId", async (req, res) => {
     try {
       // Check Redis cache first
       const cachedData = await client.get(cacheKey);
-      if (cachedData && cachedData !== "nil" || cachedData !== null || cachedData !== undefined) {
+      if (cachedData) {
         console.log("Returning cached data for:", summonerId);
         return res.status(200).json(JSON.parse(cachedData));
       }
