@@ -142,7 +142,7 @@ const cacheData = async () => {
     console.log('File moved successfully!');
 
     console.log('Loading players from JSON file...');
-    const players = JSON.parse(fs.readFileSync(newPath));
+    const players = JSON.parse(fs.readFileSync(jsonFilePath));
 
     console.log('Caching data in Redis...');
     await cachePlayersInRedis(client, players);
