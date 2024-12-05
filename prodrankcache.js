@@ -3,7 +3,6 @@ const { pipeline } = require('stream');
 const { promisify } = require('util');
 const fs = require('fs');
 const client = require("./redisclient");
-const { pipeline } = require('stream');
 
 const streamPipeline = promisify(pipeline);
 
@@ -47,12 +46,12 @@ const fetchAndCacheData = async () => {
 
 const cachePlayersInRedis = async (client, players) => {
   try {
-    const pipeline = client.pipeline();
+    const redisPipeline = client.pipeline();
     players.forEach((player) => {
       const key = `rank:${player.ladderRank}:${player.summonerId}`;
-      pipeline.set(key, JSON.stringify(player), 'EX', 86400);
+      redisPipeline.set(key, JSON.stringify(player), 'EX', 86400);
     });
-    await pipeline.exec();
+    await redisPipeline.exec();
     console.log('Cached players in Redis.');
   } catch (error) {
     console.error('Error caching players:', error.message);
