@@ -6,7 +6,7 @@ const client = require("./redisclient");
 
 const streamPipeline = promisify(pipeline);
 
-const fetchAndCacheData = async () => {
+export const fetchAndCacheData = async () => {
   const fileUrl = 'https://your-cloud-storage.com/players-ladder.json';
 
   try {
@@ -57,5 +57,3 @@ const cachePlayersInRedis = async (client, players) => {
     console.error('Error caching players:', error.message);
   }
 };
-
-module.exports = fetchAndCacheData();
