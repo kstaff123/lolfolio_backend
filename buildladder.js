@@ -103,7 +103,7 @@ const start = async () => {
 };
 const cacheData = async () => {
   try {
-    const players = JSON.parse(fs.readFileSync(jsonFile));
+    const players = jsonFile;
     await cachePlayersInRedis(client, players);
   } catch (error) {
     console.error("Error caching players:", error.message);
