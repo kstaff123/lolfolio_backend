@@ -36,6 +36,7 @@ app.listen(PORT, async () => {
     console.log("Building ladder...");
     await fetchAndCacheData(); // Call the function with `await`
     console.log("Ladder built successfully");
+    console.log(await client.keys("rank:*"));
 } catch (error) {
     console.error("Error building ladder:", error);
 }
