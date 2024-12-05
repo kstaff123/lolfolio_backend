@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "poststart": "mv ./players-ladder.json /app/data/"
+    "start": "node app.js && mv ./players-ladder.json /app/data/"
   },
   "keywords": [],
   "author": "",
