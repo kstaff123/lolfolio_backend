@@ -3,6 +3,7 @@ const axios = require("axios");
 const fs = require("fs");
 const redis = require("redis");
 const client = require("./redisclient");
+const { json } = require("express");
 const jsonFilePath = "/app/data/players-ladder.json";
 
 
@@ -140,7 +141,8 @@ const cacheData = async () => {
     console.log('Moving file...');
     await moveAsync(oldPath, newPath); // Wait for file to be moved
     console.log('File moved successfully!');
-
+    console.log((jsonFilePath));
+    console.log(JSON(fs.readFileSync(jsonFilePath)));
     console.log('Loading players from JSON file...');
     const players = JSON.parse(fs.readFileSync(jsonFilePath));
 
