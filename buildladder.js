@@ -141,18 +141,22 @@ const cacheData = async () => {
     console.log('Moving file...');
     await moveAsync(oldPath, newPath); // Wait for file to be moved
     console.log('File moved successfully!');
-    console.log((jsonFilePath));
-    console.log(JSON(fs.readFileSync(jsonFilePath)));
-    console.log('Loading players from JSON file...');
-    const players = JSON.parse(fs.readFileSync(jsonFilePath));
-
+  
+    console.log(`Attempting to read JSON from: ${jsonFilePath}`);
+    
+    const fileContent = fs.readFileSync(jsonFilePath, 'utf8'); // Read the file as a string
+    console.log('Raw file content:', fileContent); // Log raw file content
+  
+    const players = JSON.parse(fileContent); // Parse the JSON
+    console.log('Parsed JSON:', players); // Log the parsed JSON object
+  
     console.log('Caching data in Redis...');
     await cachePlayersInRedis(client, players);
     console.log('Data cached successfully.');
   } catch (error) {
     console.error('Error during cache data process:', error.message);
   }
-};
+};  
 
 
 module.exports = {cacheData, cachePlayersInRedis};
