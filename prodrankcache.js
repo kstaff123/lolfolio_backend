@@ -56,6 +56,9 @@ const cachePlayersInRedis = async (client, players) => {
   } catch (error) {
     console.error('Error caching players:', error.message);
   }
+
+  console.log('Download, processing, and caching completed successfully.');
+
 };
 
 module.exports = { fetchAndCacheData};

@@ -30,16 +30,15 @@ app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, ma
 
 // Start the server
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   try {
     console.log("Building ladder...");
-    fetchAndCacheData;
+    await fetchAndCacheData(); // Call the function with `await`
     console.log("Ladder built successfully");
-  }
-  catch (error) {
-    console.log(error);
-  }
+} catch (error) {
+    console.error("Error building ladder:", error);
+}
 });
 
 
