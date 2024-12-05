@@ -79,6 +79,12 @@ const saveToJSON = (filename, data) => {
 };
 
 const start = async () => {
+  const client = redis.createClient();
+
+  client.on("error", (err) => console.error("Redis client error:", err));
+  client.on("connect", () => console.log("Connected to Redis"));
+
+  await client.connect(); // Connect to Redis
 
   try {
     console.log("Loading players from JSON file...");
@@ -98,6 +104,9 @@ const start = async () => {
     console.log("All tasks completed successfully.");
   } catch (error) {
     console.error("An error occurred:", error.message);
+  } finally {
+    await client.quit(); // Ensure Redis is closed
+    console.log("Redis connection closed.");
   }
 };
 const cacheData = async () => {
