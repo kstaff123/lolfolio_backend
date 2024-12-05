@@ -3,7 +3,7 @@ const axios = require("axios");
 const fs = require("fs");
 const redis = require("redis");
 const client = require("./redisclient");
-const jsonFile = require("./players-ladder.json");
+const jsonFilePath = "/app/data/players-ladder.json";
 
 
 
@@ -103,7 +103,7 @@ const start = async () => {
 };
 const cacheData = async () => {
   try {
-    const players = jsonFile;
+    const players = JSON.parse(fs.readFileSync(jsonFilePath));
     await cachePlayersInRedis(client, players);
   } catch (error) {
     console.error("Error caching players:", error.message);
