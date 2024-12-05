@@ -33,6 +33,8 @@ router.get("/player/:summonerId", async (req, res) => {
       const totalPlayers = rankKeys.length;
   
       const rankKey = rankKeys.find((key) => key.includes(summonerId));
+      console.log("Rank key:", rankKey);
+      console.log(playerData)
       let rank = "unknown";
       let percentile = "unknown";
   
