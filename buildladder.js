@@ -6,34 +6,36 @@ const client = require("./redisclient");
 const jsonFilePath = "/app/data/players-ladder.json";
 
 
-function move(oldPath, newPath, callback) {
-
-  fs.rename(oldPath, newPath, function (err) {
+function moveAsync(oldPath, newPath) {
+  return new Promise((resolve, reject) => {
+    fs.rename(oldPath, newPath, function (err) {
       if (err) {
-          if (err.code === 'EXDEV') {
-              copy();
-          } else {
-              callback(err);
-          }
-          return;
+        if (err.code === 'EXDEV') {
+          // Handle cross-device copy
+          const readStream = fs.createReadStream(oldPath);
+          const writeStream = fs.createWriteStream(newPath);
+
+          readStream.on('error', reject);
+          writeStream.on('error', reject);
+
+          readStream.on('close', function () {
+            fs.unlink(oldPath, (unlinkErr) => {
+              if (unlinkErr) reject(unlinkErr);
+              else resolve();
+            });
+          });
+
+          readStream.pipe(writeStream);
+        } else {
+          reject(err);
+        }
+      } else {
+        resolve();
       }
-      callback();
+    });
   });
-
-  function copy() {
-      var readStream = fs.createReadStream(oldPath);
-      var writeStream = fs.createWriteStream(newPath);
-
-      readStream.on('error', callback);
-      writeStream.on('error', callback);
-
-      readStream.on('close', function () {
-          fs.unlink(oldPath, callback);
-      });
-
-      readStream.pipe(writeStream);
-  }
 }
+
 
 
 // Constants for sorting
@@ -131,25 +133,24 @@ const start = async () => {
   }
 };
 const cacheData = async () => {
-  var oldPath = './players-ladder.json'
-  var newPath = '/app/data/players-ladder.json'
-  
-  move(oldPath, newPath, (err) => {
-    if (err) {
-      console.error('Error moving file:', err.message);
-    } else {
-      console.log('File moved successfully!');
-    }
-  });
+  const oldPath = './players-ladder.json';
+  const newPath = '/app/data/players-ladder.json';
 
-  
   try {
-    const players = JSON.parse(fs.readFileSync(jsonFilePath));
-    await cachePlayersInRedis(client, players);
-  } catch (error) {
-    console.error("Error caching players:", error.message);
-  }
+    console.log('Moving file...');
+    await moveAsync(oldPath, newPath); // Wait for file to be moved
+    console.log('File moved successfully!');
 
-}
+    console.log('Loading players from JSON file...');
+    const players = JSON.parse(fs.readFileSync(newPath));
+
+    console.log('Caching data in Redis...');
+    await cachePlayersInRedis(client, players);
+    console.log('Data cached successfully.');
+  } catch (error) {
+    console.error('Error during cache data process:', error.message);
+  }
+};
+
 
 module.exports = {cacheData, cachePlayersInRedis};
