@@ -4,39 +4,6 @@ const fs = require("fs");
 const redis = require("redis");
 const client = require("./redisclient");
 const { json } = require("express");
-const jsonFilePath = "/app/data/players-ladder.json";
-
-
-function moveAsync(oldPath, newPath) {
-  return new Promise((resolve, reject) => {
-    fs.rename(oldPath, newPath, function (err) {
-      if (err) {
-        if (err.code === 'EXDEV') {
-          // Handle cross-device copy
-          const readStream = fs.createReadStream(oldPath);
-          const writeStream = fs.createWriteStream(newPath);
-
-          readStream.on('error', reject);
-          writeStream.on('error', reject);
-
-          readStream.on('close', function () {
-            fs.unlink(oldPath, (unlinkErr) => {
-              if (unlinkErr) reject(unlinkErr);
-              else resolve();
-            });
-          });
-
-          readStream.pipe(writeStream);
-        } else {
-          reject(err);
-        }
-      } else {
-        resolve();
-      }
-    });
-  });
-}
-
 
 
 // Constants for sorting
@@ -134,29 +101,20 @@ const start = async () => {
   }
 };
 const cacheData = async () => {
-  const oldPath = './players-ladder.json';
-  const newPath = '/app/data/players-ladder.json';
+  const externalFileUrl = "https://storage.googleapis.com/playerladder/players-ladder.json";
 
   try {
-    console.log('Moving file...');
-    await moveAsync(oldPath, newPath); // Wait for file to be moved
-    console.log('File moved successfully!');
-  
-    console.log(`Attempting to read JSON from: ${jsonFilePath}`);
-    
-    const fileContent = fs.readFileSync(jsonFilePath, 'utf8'); // Read the file as a string
-    console.log('Raw file content:', fileContent); // Log raw file content
-  
-    const players = JSON.parse(fileContent); // Parse the JSON
-    console.log('Parsed JSON:', players); // Log the parsed JSON object
-  
+    console.log('Fetching JSON from external storage...');
+    const response = await axios.get(externalFileUrl);
+    const players = response.data; // Assumes the file is valid JSON
+
     console.log('Caching data in Redis...');
     await cachePlayersInRedis(client, players);
     console.log('Data cached successfully.');
   } catch (error) {
-    console.error('Error during cache data process:', error.message);
+    console.error('Error fetching or caching players:', error.message);
   }
-};  
+};
 
 
 module.exports = {cacheData, cachePlayersInRedis};

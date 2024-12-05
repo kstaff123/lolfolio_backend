@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-  "start": "apt-get update && apt-get install -y git-lfs && git lfs install && git lfs pull && node app.js"
+  "start": "node app.js"
 },
   "keywords": [],
   "author": "",
