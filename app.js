@@ -34,7 +34,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   try {
     console.log("Building ladder...");
-    cacheData();
+    
   }
   catch (error) {
     console.log(error);
