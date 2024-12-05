@@ -8,7 +8,7 @@ const rankedData = require("./routes/rankeddata.js");
 const rankpercentile = require("./routes/rankpercentile.js");
 const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
-const {cacheData, cachePlayersInRedis} = require("./buildladder.js");
+const cacheData = require("./buildladder.js");
 
 const app = express();
 

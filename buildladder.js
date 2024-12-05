@@ -3,7 +3,7 @@ const axios = require("axios");
 const fs = require("fs");
 const redis = require("redis");
 const client = require("./redisclient");
-const jsonFile = require("players-ladder.json");
+const jsonFile = require("./players-ladder.json");
 
 
 
