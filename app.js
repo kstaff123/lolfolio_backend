@@ -10,6 +10,7 @@ const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
 const { fetchAndCacheData } = require("./prodrankcache.js");
 const fetchChampMastery  = require("./routes/championmastery.js");
+const fetchChampList = require("./routes/champlistJson.js");
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.options('*', cors());
 app.use(express.json());
 
 // Register routes
-app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, matchData, fetchMatchById, fetchChampMastery);
+app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, matchData, fetchMatchById, fetchChampMastery, fetchChampList);
 
 // Start the server
 const PORT = process.env.PORT || 3001;
