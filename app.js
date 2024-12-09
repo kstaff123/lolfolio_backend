@@ -10,6 +10,8 @@ const matchData = require("./routes/match.js");
 const fetchMatchById = require("./routes/matchbyid.js");
 const { fetchAndCacheData } = require("./prodrankcache.js");
 const client = require("./redisclient.js");
+const fetchChampMastery = require("./routes/championmastery.js");
+const champList = require("./routes/champlistJson.js");
 
 const app = express();
 
@@ -36,7 +38,9 @@ app.use(
   rankedData,
   rankpercentile,
   matchData,
-  fetchMatchById
+  fetchMatchById,
+  fetchChampMastery,
+  champList
 );
 
 // Start the server
