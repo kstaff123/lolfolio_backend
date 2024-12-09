@@ -14,20 +14,30 @@ const client = require("./redisclient.js");
 const app = express();
 
 // Register CORS middleware
-app.use(cors({
-  origin: 'https://lolfolio-production.up.railway.app', // Replace with your frontend domain
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the HTTP methods your API supports
-  allowedHeaders: ['Content-Type', 'Authorization'], // Include any custom headers your app uses
-}));
+app.use(
+  cors({
+    origin: "https://lolfolio.gg", // Replace with your frontend domain
+    methods: ["GET", "POST", "PUT", "DELETE"], // Add the HTTP methods your API supports
+    allowedHeaders: ["Content-Type", "Authorization"], // Include any custom headers your app uses
+  })
+);
 
 // Handle preflight requests
-app.options('*', cors());
+app.options("*", cors());
 
 // Register JSON parser middleware
 app.use(express.json());
 
 // Register routes
-app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, matchData, fetchMatchById);
+app.use(
+  "/api",
+  accountRoutes,
+  accountRoutesData,
+  rankedData,
+  rankpercentile,
+  matchData,
+  fetchMatchById
+);
 
 // Start the server
 const PORT = process.env.PORT || 3001;
@@ -38,9 +48,7 @@ app.listen(PORT, async () => {
     await fetchAndCacheData(); // Call the function with `await`
     console.log("Ladder built successfully");
     console.log(await client.keys("rank:*"));
-} catch (error) {
+  } catch (error) {
     console.error("Error building ladder:", error);
-}
+  }
 });
-
-
