@@ -43,3 +43,4 @@ dump.rdb
 
 players-ladder copy.json
 players-ladder.json
+redis.conf
