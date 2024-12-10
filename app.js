@@ -15,6 +15,14 @@ const champList = require("./routes/champlistJson.js");
 
 const app = express();
 
+// Serve static files from the Vite build folder
+app.use(express.static(path.join(__dirname, "frontend", "dist"))); // Adjust 'frontend/dist' to your Vite build folder
+
+// Catch-all route to handle client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html")); // Adjust the path to your `index.html`
+});
+
 // Register CORS middleware
 app.use(cors({
   origin: 'https://lolfolio-production.up.railway.app', // Replace with your frontend domain
