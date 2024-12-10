@@ -1,7 +1,6 @@
 require("dotenv").config(); // Load environment variables
 const express = require("express");
 const cors = require("cors");
-const path = require("path"); // Import path module
 
 // Import Routes
 const accountRoutes = require("./routes/accountroutes.js");
@@ -34,14 +33,6 @@ app.use(express.json());
 
 // Register API routes
 app.use("/api", accountRoutes, accountRoutesData, rankedData, rankpercentile, matchData, fetchMatchById, fetchChampMastery, champList);
-
-// Serve static files from the Vite build folder
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
-
-// Catch-all route to handle client-side routing for React
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
 
 // Start the server
 const PORT = process.env.PORT || 3001;
