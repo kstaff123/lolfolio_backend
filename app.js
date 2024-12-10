@@ -20,7 +20,7 @@ const app = express();
 // Register CORS middleware
 app.use(
   cors({
-    origin: "https://lolfolio-production.up.railway.app", // Replace with your frontend domain
+    origin: "https://lolfolio.gg", // Replace with your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE"], // Add the HTTP methods your API supports
     allowedHeaders: ["Content-Type", "Authorization"], // Include any custom headers your app uses
   })
